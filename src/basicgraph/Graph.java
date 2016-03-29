@@ -123,11 +123,16 @@ public abstract class Graph {
 	public List<Integer> degreeSequence() {
 		// XXX: Implement in part 1 of week 1
 		List<Integer> sequence = new ArrayList<Integer>();
-		List<Integer> neighbors; 
+		int degree;
+//		List<Integer> neighbors;
+//		List<Integer> inNeighbors; 
 		
 		for(int i = 0; i < getNumVertices(); i++){
-			neighbors = getNeighbors(i);
-			sequence.add(neighbors.size());
+//			neighbors = getNeighbors(i);
+//			inNeighbors = getInNeighbors(i);
+//			sequence.add(neighbors.size());
+			degree = getNeighbors(i).size() + getInNeighbors(i).size();
+			sequence.add(degree);
 		}
 		Collections.sort(sequence);
 		Collections.reverse(sequence);
