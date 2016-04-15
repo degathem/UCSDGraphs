@@ -153,7 +153,7 @@ public class MapGraph {
 		
 		// Hook for visualization.  See writeup.
 		//nodeSearched.accept(next.getLocation());
-
+		
 		return null;
 	}
 	
