@@ -9,11 +9,14 @@ package roadgraph;
 
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
 import geography.GeographicPoint;
 import util.GraphLoader;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author UCSD MOOC development team and YOU
@@ -24,14 +27,19 @@ import util.GraphLoader;
  */
 public class MapGraph {
 	//TODO: Add your member variables here in WEEK 2
+	int numVertices;
+	int numEdges;
 	
-	
+	Map<GeographicPoint, ArrayList<GeographicPoint>> geoPointAdjList;
 	/** 
 	 * Create a new empty MapGraph 
 	 */
 	public MapGraph()
 	{
 		// TODO: Implement in this constructor in WEEK 2
+		numVertices = 0;
+		numEdges = 0;
+		geoPointAdjList = new HashMap<GeographicPoint, ArrayList<GeographicPoint>>();
 	}
 	
 	/**
@@ -41,7 +49,7 @@ public class MapGraph {
 	public int getNumVertices()
 	{
 		//TODO: Implement this method in WEEK 2
-		return 0;
+		return numVertices;
 	}
 	
 	/**
@@ -51,7 +59,7 @@ public class MapGraph {
 	public Set<GeographicPoint> getVertices()
 	{
 		//TODO: Implement this method in WEEK 2
-		return null;
+		return geoPointAdjList.keySet();
 	}
 	
 	/**
@@ -61,7 +69,7 @@ public class MapGraph {
 	public int getNumEdges()
 	{
 		//TODO: Implement this method in WEEK 2
-		return 0;
+		return numEdges;
 	}
 
 	
@@ -76,7 +84,19 @@ public class MapGraph {
 	public boolean addVertex(GeographicPoint location)
 	{
 		// TODO: Implement this method in WEEK 2
-		return false;
+		if (location == null) {
+			return false;
+		}
+		
+		for (GeographicPoint point : geoPointAdjList.keySet()){
+			if (point.toString() == location.toString()){
+				return false;
+			}
+		}
+		geoPointAdjList.put(location, new ArrayList<GeographicPoint>());
+		
+		
+		return true;
 	}
 	
 	/**
@@ -95,6 +115,12 @@ public class MapGraph {
 			String roadType, double length) throws IllegalArgumentException {
 
 		//TODO: Implement this method in WEEK 2
+		if ((geoPointAdjList.containsKey(from) && geoPointAdjList.containsKey(to))|| length < 0) {
+			throw new IllegalArgumentException("Both geographic point must be part of the graph");
+		}
+		
+		geoPointAdjList.get(to).add(from);
+		numEdges++;
 		
 	}
 	
