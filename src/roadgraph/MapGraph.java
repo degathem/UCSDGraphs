@@ -30,7 +30,7 @@ public class MapGraph {
 	int numVertices;
 	int numEdges;
 	
-	Map<GeographicPoint, ArrayList<GeographicPoint>> geoPointAdjList;
+	Map<GeographicPoint, ArrayList<RoadEdge>> geoPointAdjList;
 	/** 
 	 * Create a new empty MapGraph 
 	 */
@@ -39,7 +39,7 @@ public class MapGraph {
 		// TODO: Implement in this constructor in WEEK 2
 		numVertices = 0;
 		numEdges = 0;
-		geoPointAdjList = new HashMap<GeographicPoint, ArrayList<GeographicPoint>>();
+		geoPointAdjList = new HashMap<GeographicPoint, ArrayList<RoadEdge>>();
 	}
 	
 	/**
@@ -93,7 +93,7 @@ public class MapGraph {
 				return false;
 			}
 		}
-		geoPointAdjList.put(location, new ArrayList<GeographicPoint>());
+		geoPointAdjList.put(location, new ArrayList<RoadEdge>());
 		
 		
 		return true;
@@ -118,8 +118,8 @@ public class MapGraph {
 		if ((geoPointAdjList.containsKey(from) && geoPointAdjList.containsKey(to))|| length < 0) {
 			throw new IllegalArgumentException("Both geographic point must be part of the graph");
 		}
-		
-		geoPointAdjList.get(to).add(from);
+		RoadEdge edgeToAdd = new RoadEdge(from, roadName,roadType, length);
+		geoPointAdjList.get(to).add(edgeToAdd);
 		numEdges++;
 		
 	}

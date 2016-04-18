@@ -3,10 +3,17 @@ package roadgraph;
 import geography.GeographicPoint;
 
 public class RoadEdge {
-	private GeographicPoint to;
+	private GeographicPoint destinationPoint;
 	private String roadName;
 	private String roadType;
 	private double length;
+	
+	public RoadEdge(GeographicPoint destinationPoint, String roadName, String roadType, double length){
+		this.destinationPoint = destinationPoint;
+		this.roadName = roadName;
+		this.roadType = roadType;
+		this.length = length;
+	}
 	
 	public void setRoadName(String roadName){
 		this.roadName = roadName;
@@ -32,7 +39,11 @@ public class RoadEdge {
 		return this.length;
 	}
 	
-	public GeographicPoint GeographicPoint() {
-		return null;
+	public void setDestinationPoint(GeographicPoint destinationPoint) {
+		this.destinationPoint = destinationPoint;
+	}
+	
+	public GeographicPoint getDestinationPoint(){
+		return destinationPoint;
 	}
 }
