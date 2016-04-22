@@ -57,15 +57,15 @@ DFS(S, G)
   - a queue uses first in (enqueue) last out (dequeue)
 ```
 BFS(S, G)
-  initialize: stack, visited Hashset, and parent Hashset
-  enqueue S onto the stack and add to visited
-  while stack is not empty:
+  initialize: queue, visited Hashset, and parent Hashset
+  enqueue S onto the queue and add to visited
+  while queue is not empty:
     dequeue node curr from top of queue
     if curr== G return parent map
       for each of curr's neighbors, n, not in visited set:
         add n to visited set
         add curr as n's parent in parent map
-        enqueue n onto the stack
+        enqueue n onto the queue
 ```
 - Implement the code for DFS and BFS
 - Analyze and compare the worst-case running time of DFS and BFS

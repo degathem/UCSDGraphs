@@ -8,15 +8,18 @@
 package roadgraph;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.function.Consumer;
 
 import geography.GeographicPoint;
 import util.GraphLoader;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @author UCSD MOOC development team and YOU
@@ -30,7 +33,8 @@ public class MapGraph {
 	int numVertices;
 	int numEdges;
 	
-	Map<GeographicPoint, ArrayList<RoadEdge>> geoPointAdjList;
+	Map<String, IntersectionNode> intersectionAdjList;
+	
 	/** 
 	 * Create a new empty MapGraph 
 	 */
@@ -39,7 +43,7 @@ public class MapGraph {
 		// TODO: Implement in this constructor in WEEK 2
 		numVertices = 0;
 		numEdges = 0;
-		geoPointAdjList = new HashMap<GeographicPoint, ArrayList<RoadEdge>>();
+		intersectionAdjList = new HashMap<String, IntersectionNode>();
 	}
 	
 	/**
@@ -59,7 +63,9 @@ public class MapGraph {
 	public Set<GeographicPoint> getVertices()
 	{
 		//TODO: Implement this method in WEEK 2
-		return geoPointAdjList.keySet();
+		
+		
+		return null;
 	}
 	
 	/**
@@ -84,16 +90,13 @@ public class MapGraph {
 	public boolean addVertex(GeographicPoint location)
 	{
 		// TODO: Implement this method in WEEK 2
-		if (location == null) {
+		if (location == null || intersectionAdjList.containsKey(location.toString())) {
 			return false;
 		}
 		
-		for (GeographicPoint point : geoPointAdjList.keySet()){
-			if (point.toString() == location.toString()){
-				return false;
-			}
-		}
-		geoPointAdjList.put(location, new ArrayList<RoadEdge>());
+		
+		intersectionAdjList.put(location.toString(), new IntersectionNode(location));
+		
 		
 		
 		return true;
@@ -115,11 +118,12 @@ public class MapGraph {
 			String roadType, double length) throws IllegalArgumentException {
 
 		//TODO: Implement this method in WEEK 2
-		if ((geoPointAdjList.containsKey(from) && geoPointAdjList.containsKey(to))|| length < 0) {
-			throw new IllegalArgumentException("Both geographic point must be part of the graph");
+		if ((intersectionAdjList.containsKey(from.toString()) && intersectionAdjList.containsKey(to.toString()))|| length < 0) {
+			throw new IllegalArgumentException("Both from and to points must be part of the graph");
 		}
-		RoadEdge edgeToAdd = new RoadEdge(from, roadName,roadType, length);
-		geoPointAdjList.get(to).add(edgeToAdd);
+		RoadEdge edgeToAdd = new RoadEdge(to, roadName,roadType, length);
+		
+		intersectionAdjList.get(from.toString()).addRoadEdge(edgeToAdd);
 		numEdges++;
 		
 	}
@@ -150,9 +154,32 @@ public class MapGraph {
 			 					     GeographicPoint goal, Consumer<GeographicPoint> nodeSearched)
 	{
 		// TODO: Implement this method in WEEK 2
-		
+	/*	BFS(S, G)
+		  initialize: queue, visited Hashset, and parent Hashset
+		  enqueue S onto the queue and add to visited
+		  while queue is not empty:
+		    dequeue node curr from top of queue
+		    if curr== G return parent map
+		      for each of curr's neighbors, n, not in visited set:
+		        add n to visited set
+		        add curr as n's parent in parent map
+		        enqueue n onto the queue*/
 		// Hook for visualization.  See writeup.
 		//nodeSearched.accept(next.getLocation());
+		Queue<IntersectionNode> queue = new LinkedList<IntersectionNode>();
+		HashSet<IntersectionNode> visited = new HashSet<IntersectionNode>();
+		HashSet<IntersectionNode> parent = new HashSet<IntersectionNode>();
+		IntersectionNode curr;
+		
+		queue.add(intersectionAdjList.get(start.toString()));
+		visited.add(intersectionAdjList.get(start.toString()));
+		while (!queue.isEmpty()){
+			curr = queue.remove();
+			if (curr.toString().equals(goal.toString())){
+				return new ArrayList<IntersectionNode>(parent);
+			}
+			for ()
+		}
 		
 		return null;
 	}
@@ -223,8 +250,9 @@ public class MapGraph {
 		return null;
 	}
 
-	
-	
+	private GeographicPoint getEdges(GeographicPoint pointToGet) {
+		
+	}
 	public static void main(String[] args)
 	{
 		System.out.print("Making a new map...");
